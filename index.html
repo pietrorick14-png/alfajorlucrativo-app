@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B0705">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Alfajor">
+<meta name="robots" content="noindex, nofollow">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Alfajor de Vitrine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: app de celular, coluna única de até 560px, barra de abas fixa embaixo, telas trocadas por rota */
+:root{
+  --bg:#0B0705; --surface:#160E0A; --surface2:#21150F; --line:rgba(255,255,255,.09);
+  --fg:#F6EDE3; --muted:#BFAE9C; --faint:#8F7F6F;
+  --gold:#F5B544; --gold2:#E08A2E; --gold-soft:rgba(245,181,68,.14);
+  --pist:#9BD27A; --pist-soft:rgba(155,210,122,.14); --danger:#F08A6B;
+  --display:'Unbounded',system-ui,sans-serif; --body:'Manrope',system-ui,sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--gold)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:8px}
+h1,h2,h3{font-family:var(--display);line-height:1.12;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+.wrap{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:20px 120px;display:flex;flex-direction:column;gap:22px}
+.bgfx{position:fixed;inset:0;pointer-events:none;z-index:0;background:
+  radial-gradient(520px 420px at 100% -10%,rgba(245,181,68,.16),transparent 70%),
+  radial-gradient(460px 380px at -10% 110%,rgba(155,210,122,.10),transparent 70%)}
+main{position:relative;z-index:1}
+.eyebrow{font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.muted{color:var(--muted)}
+.shine{background:linear-gradient(100deg,var(--gold) 0%,#FFE7A8 22%,var(--gold) 40%,var(--gold2) 70%,var(--gold) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
+@keyframes shine{to{background-position:-220% 0}}
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.065),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:22px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-family:var(--display);font-weight:900;font-size:.9rem;letter-spacing:.06em}
+.brand span{color:var(--gold)}
+.back{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:700;font-size:.9rem;cursor:pointer;color:var(--muted);min-height:40px}
+.back:hover{color:var(--fg);border-color:rgba(245,181,68,.45)}
+/* entrada das telas */
+.view>*{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+.view>*:nth-child(2){animation-delay:.05s}.view>*:nth-child(3){animation-delay:.1s}.view>*:nth-child(4){animation-delay:.15s}.view>*:nth-child(5){animation-delay:.2s}.view>*:nth-child(n+6){animation-delay:.25s}
+@keyframes rise{from{opacity:.001;transform:translateY(18px)}to{opacity:1;transform:none}}
+/* hero do início */
+.hero{position:relative;border-radius:28px;overflow:hidden;min-height:230px;display:flex;align-items:flex-end;border:1px solid rgba(245,181,68,.35);box-shadow:0 30px 70px -30px rgba(0,0,0,.9),0 0 80px rgba(245,181,68,.12)}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04);animation:kb 18s ease-in-out infinite alternate}
+@keyframes kb{to{transform:scale(1.12) translateY(-8px)}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,7,5,.05) 20%,rgba(11,7,5,.92) 100%)}
+.hero-in{position:relative;z-index:1;padding:22px;display:flex;flex-direction:column;gap:8px}
+.hero h1{font-size:clamp(1.5rem,6vw,1.9rem);font-weight:900}
+/* progresso */
+.prog{padding:18px;display:flex;flex-direction:column;gap:12px}
+.prog-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.bar{height:10px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--pist));transition:width .8s cubic-bezier(.2,.7,.2,1)}
+.num{font-family:var(--display);font-weight:900;font-variant-numeric:tabular-nums}
+/* trilha comece por aqui */
+.path{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;align-items:center;gap:14px;padding:14px 16px;text-decoration:none;color:var(--fg);transition:transform .25s,border-color .25s}
+.step:hover{transform:translateX(4px);border-color:rgba(245,181,68,.5)}
+.dot{width:38px;height:38px;flex:none;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:.9rem;background:var(--gold-soft);color:var(--gold);border:1px solid rgba(245,181,68,.35)}
+.step.done .dot{background:var(--pist);color:#10200A;border-color:var(--pist)}
+.step b{display:block;font-size:1rem}
+.step small{color:var(--muted);font-size:.85rem}
+.chev{margin-left:auto;color:var(--faint);flex:none}
+/* grade de módulos */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tile{position:relative;padding:16px;min-height:132px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;text-decoration:none;color:var(--fg);overflow:hidden;transition:transform .25s,border-color .25s}
+.tile:hover{transform:translateY(-4px);border-color:rgba(245,181,68,.5)}
+.tile .ic{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:var(--gold-soft)}
+.tile.p .ic{background:var(--pist-soft)}
+.tile b{font-family:var(--display);font-size:.92rem;line-height:1.2}
+.tile small{color:var(--muted);font-size:.8rem;line-height:1.35}
+.tile .ok{position:absolute;top:14px;right:14px;width:22px;height:22px;border-radius:50%;background:var(--pist);display:none;place-items:center}
+.tile.done .ok{display:grid}
+.lock{position:absolute;top:14px;right:14px;color:var(--gold)}
+/* seções de conteúdo */
+.head{display:flex;flex-direction:column;gap:10px}
+.head h1{font-size:clamp(1.6rem,7vw,2.1rem);font-weight:900}
+.card{padding:18px;display:flex;flex-direction:column;gap:10px}
+.card h2{font-size:1.05rem}
+.card h3{font-size:.95rem}
+ul.clean{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+ul.clean li{display:flex;gap:10px;align-items:flex-start}
+ul.clean li::before{content:"";flex:none;width:7px;height:7px;margin-top:9px;border-radius:50%;background:var(--gold)}
+.qty{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.qty:last-child{border-bottom:0}
+.qty span:last-child{color:var(--gold);font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+.tabs{display:flex;gap:8px;padding:5px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.tabs button{flex:1;border:0;background:none;padding:10px 12px;border-radius:999px;font-weight:800;font-size:.88rem;color:var(--muted);cursor:pointer;min-height:44px}
+.tabs button[aria-selected="true"]{background:linear-gradient(135deg,#FFD27A,var(--gold) 50%,var(--gold2));color:#1A0F0A}
+/* passo a passo em cartões */
+.stepper{display:flex;flex-direction:column;gap:14px}
+.sframe{padding:20px;display:flex;flex-direction:column;gap:14px;min-height:250px}
+.sframe .n{font-family:var(--display);font-weight:900;font-size:3rem;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--gold)}
+.sframe h2{font-size:1.2rem}
+.tip{display:flex;gap:10px;padding:12px 14px;border-radius:14px;background:var(--pist-soft);border:1px solid rgba(155,210,122,.3);font-size:.92rem}
+.tip b{color:var(--pist)}
+.nav2{display:flex;gap:10px;align-items:center}
+.dots{display:flex;gap:6px;flex:1;justify-content:center}
+.dots i{width:8px;height:8px;border-radius:99px;background:rgba(255,255,255,.15);transition:all .3s}
+.dots i.on{width:24px;background:var(--gold)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:13px 20px;font-weight:800;cursor:pointer;min-height:48px;text-decoration:none;transition:transform .2s,filter .2s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.07)}
+.btn.gold{background:linear-gradient(135deg,#FFD27A,var(--gold) 45%,var(--gold2));color:#1A0F0A;box-shadow:0 14px 36px -14px rgba(245,181,68,.7)}
+.btn.ghost{background:var(--surface2);color:var(--fg);border:1px solid var(--line)}
+.btn.pist{background:var(--pist);color:#10200A}
+.btn[disabled]{opacity:.35;pointer-events:none}
+.btn.full{width:100%}
+/* sabores */
+.flist{display:flex;flex-direction:column;gap:10px}
+.fitem{display:flex;align-items:center;gap:14px;padding:14px;text-decoration:none;color:var(--fg);transition:transform .25s,border-color .25s}
+.fitem:hover{transform:translateX(4px);border-color:rgba(245,181,68,.5)}
+.slice{width:58px;height:44px;flex:none;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 10px 24px -10px rgba(0,0,0,.9)}
+.slice i{display:block}
+.slice .c{height:9px;background:linear-gradient(180deg,#5A2E1D,#2E160D)}
+.slice .b{height:6px;background:#C99B6B}
+.slice .f{flex:1}
+.fitem b{display:block;font-size:1rem}
+.fitem small{color:var(--muted);font-size:.84rem}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;font-size:.75rem;font-weight:800;background:var(--gold-soft);color:var(--gold)}
+.badge.p{background:var(--pist-soft);color:var(--pist)}
+.fhero{display:flex;align-items:center;gap:18px}
+.fhero .slice{width:96px;height:74px;border-radius:18px}
+.fhero .slice .c{height:15px}.fhero .slice .b{height:9px}
+/* formulários */
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-weight:700;font-size:.9rem}
+.field small{color:var(--faint);font-size:.8rem}
+.inp{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:0 14px;min-height:50px;transition:border-color .2s}
+.inp:focus-within{border-color:var(--gold)}
+.inp span{color:var(--faint);font-weight:700}
+.inp input{flex:1;min-width:0;background:none;border:0;outline:0;padding:12px 0;font-size:1.05rem;font-weight:700;font-variant-numeric:tabular-nums}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.result{padding:20px;border-radius:24px;background:radial-gradient(circle at 25% 15%,rgba(155,210,122,.22),rgba(155,210,122,.04) 60%),#0F1A0B;border:1px solid rgba(155,210,122,.35);display:flex;flex-direction:column;gap:14px;box-shadow:0 0 60px rgba(155,210,122,.1)}
+.result .big{font-family:var(--display);font-weight:900;font-size:clamp(2rem,9vw,2.6rem);color:var(--pist);line-height:1;font-variant-numeric:tabular-nums}
+.rgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.rgrid div{padding:12px;border-radius:14px;background:rgba(0,0,0,.25);display:flex;flex-direction:column;gap:2px}
+.rgrid small{color:#CFE8BE;font-size:.78rem;font-weight:700}
+.rgrid b{font-family:var(--display);font-size:1.05rem;font-variant-numeric:tabular-nums}
+.warn{color:var(--danger);font-weight:700;font-size:.9rem}
+/* mensagens */
+.msg{padding:16px;display:flex;flex-direction:column;gap:12px}
+.msg pre{margin:0;white-space:pre-wrap;font-family:var(--body);font-size:.95rem;line-height:1.55;padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.msg .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.copied{color:var(--pist);font-weight:800;font-size:.85rem}
+/* caderninho */
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.stat{padding:16px;display:flex;flex-direction:column;gap:4px}
+.stat small{color:var(--muted);font-size:.8rem;font-weight:700}
+.stat b{font-family:var(--display);font-size:1.35rem;font-variant-numeric:tabular-nums}
+.stat.g b{color:var(--pist)}
+.sale{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.sale .when{font-size:.78rem;color:var(--faint)}
+.sale .val{margin-left:auto;font-family:var(--display);font-weight:700;color:var(--pist);font-variant-numeric:tabular-nums;white-space:nowrap}
+.x{background:none;border:0;color:var(--faint);cursor:pointer;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;flex:none}
+.x:hover{color:var(--danger);background:rgba(240,138,107,.1)}
+.empty{padding:26px 18px;text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center}
+/* ateliê */
+.atelie{position:relative;overflow:hidden;padding:24px;border-radius:28px;border:1px solid rgba(245,181,68,.55);background:linear-gradient(170deg,#24160E,#120A07);box-shadow:0 0 90px rgba(245,181,68,.16);display:flex;flex-direction:column;gap:16px}
+.atelie::before{content:"";position:absolute;width:340px;height:340px;right:-120px;top:-140px;border-radius:50%;border:1px dashed rgba(245,181,68,.35);animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.locked{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.locked b{font-size:.95rem}
+.locked small{display:block;color:var(--muted);font-size:.82rem}
+.locked svg{flex:none;color:var(--gold)}
+/* barra de abas */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));background:rgba(11,7,5,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid var(--line)}
+.tabbar nav{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+.tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;border-radius:14px;text-decoration:none;color:var(--faint);font-size:.7rem;font-weight:800;min-height:52px;justify-content:center;transition:color .2s,background .2s}
+.tabbar a[aria-current="page"]{color:var(--gold);background:var(--gold-soft)}
+.toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);opacity:0;z-index:30;padding:12px 18px;border-radius:999px;background:var(--pist);color:#10200A;font-weight:800;font-size:.9rem;transition:all .3s;pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+@media (max-width:360px){.grid,.two,.stats,.rgrid{grid-template-columns:1fr}}
+</style>
+
+</head>
+<body>
+<div class="bgfx" aria-hidden="true"></div>
+<main id="app" aria-live="polite"></main>
+<div class="toast" id="toast" role="status"></div>
+<div class="tabbar"><nav id="tabbar" aria-label="Navegação principal"></nav></div>
+
+<script>
+(function(){
+/* ---------- armazenamento seguro ---------- */
+var KEY='alfajor-vitrine-v1';
+function load(){try{var s=JSON.parse(localStorage.getItem(KEY));return s&&typeof s==='object'?s:{}}catch(e){return {}}}
+var S=Object.assign({done:{},calc:{ing:55,emb:0.40,rend:20,preco:15},vendas:[]},load());
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+var CHECKOUT_ATELIE='[LINK DA ASSINATURA DO ATELIÊ]';
+
+/* ---------- utilidades ---------- */
+function brl(v){return 'R$ '+(Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function toast(t){var el=document.getElementById('toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){el.classList.remove('on')},1800)}
+var I={
+ chev:'<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>',
+ back:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 6 9 12 15 18"/></svg>',
+ check:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10200A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>',
+ lock:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+ x:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>',
+ home:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
+ spoon:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>',
+ calc:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="8.01" y2="11"/><line x1="12" y1="11" x2="12.01" y2="11"/><line x1="16" y1="11" x2="16.01" y2="11"/><line x1="8" y1="15" x2="8.01" y2="15"/><line x1="12" y1="15" x2="12.01" y2="15"/><line x1="16" y1="15" x2="16" y2="18"/></svg>',
+ book:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>',
+ star:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 16.5 5.5 21 7.5 13.5 2 9 9 9 12 2"/></svg>',
+ fire:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5B544" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-7 2 1 3 3 3 5"/></svg>',
+ drop:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5B544" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7l5.7 5.7a8 8 0 1 1-11.4 0z"/></svg>',
+ chat:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9BD27A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.5 8.5 0 1 1 21 11.5z"/></svg>',
+ gift:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5B544" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M12 8c-2-4-7-4-7-1s7 1 7 1z"/><path d="M12 8c2-4 7-4 7-1s-7 1-7 1z"/></svg>',
+ circle:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9BD27A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>',
+ calcp:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9BD27A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="13" y2="16"/></svg>',
+ trend:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9BD27A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>'
+};
+
+/* ---------- conteúdo ---------- */
+var MODS=[
+ {id:'fornada',t:'Primeira Fornada',d:'20 alfajores, do zero',ic:I.fire},
+ {id:'banho',t:'Banho de Vitrine',d:'Chocolate brilhante e recheio firme',ic:I.drop},
+ {id:'sabores',t:'Os 8 Sabores',d:'Fichas completas',ic:I.circle,p:1},
+ {id:'preco',t:'Calculadora',d:'Custo, preço e lucro',ic:I.calcp,p:1},
+ {id:'mensagens',t:'Mensagens que Vendem',d:'Copiar e mandar',ic:I.chat,p:1},
+ {id:'natal',t:'Caixinha de Natal',d:'Kits de 4, 6 e 12',ic:I.gift},
+ {id:'caderno',t:'Caderninho de Lucro',d:'Cada venda anotada',ic:I.trend,p:1}
+];
+
+var FORNADA={
+ bolacha:{nome:'Com bolacha de pacote',tempo:'cerca de 1 hora',lista:[
+   ['Bolacha maisena redonda','40 unidades (2 pacotes)'],
+   ['Recheio do sabor escolhido','cerca de 400 g'],
+   ['Cobertura fracionada sabor chocolate','600 g'],
+   ['Papel manteiga','1 folha grande'],
+   ['Saquinhos de celofane ou embalagem individual','20 unidades']],
+  passos:[
+   {t:'Separe as bolachas em pares',x:'Escolha 40 bolachas inteiras, sem rachaduras. Junte em pares do mesmo tamanho: o alfajor fica alinhado e bonito na hora de cortar.',dica:'Bolacha quebrada vira farofa pra decorar o topo. Não jogue fora.'},
+   {t:'Recheie no centro',x:'Coloque 1 colher de sopa cheia de recheio no centro de uma bolacha. Tampe com a outra e pressione com a mão inteira, até o recheio chegar perto da borda sem vazar.',dica:'Recheio no centro, nunca espalhado até a borda. É isso que faz ele aparecer bonito quando você corta.'},
+   {t:'Leve à geladeira',x:'Coloque os alfajores montados numa assadeira e leve à geladeira por 15 minutos. O recheio firma e a bolacha não escorrega no banho.',dica:'Mais de 30 minutos de geladeira faz o chocolate rachar depois. Respeite os 15.'},
+   {t:'Faça o Banho de Vitrine',x:'Derreta a cobertura e banhe cada alfajor seguindo o módulo Banho de Vitrine. Escorra o excesso batendo o garfo na borda da tigela.',dica:'Banhe de 5 em 5. Assim a cobertura não esfria antes de terminar.'},
+   {t:'Seque e embale',x:'Deixe secar sobre papel manteiga por 20 minutos em local fresco. Depois de seco, embale um por um em saquinho fechado.',dica:'Embalado e em local fresco, ele aguenta a semana. Os de fruta duram menos: veja na ficha do sabor.'}]},
+ massa:{nome:'Com massa caseira',tempo:'cerca de 2 horas',lista:[
+   ['Manteiga sem sal em temperatura ambiente','200 g'],
+   ['Açúcar','100 g'],
+   ['Gemas','3'],
+   ['Essência de baunilha','1 colher de chá'],
+   ['Amido de milho','300 g'],
+   ['Farinha de trigo','150 g'],
+   ['Fermento químico em pó','1 colher de chá'],
+   ['Bicarbonato de sódio','1/2 colher de chá'],
+   ['Recheio do sabor escolhido','cerca de 400 g'],
+   ['Cobertura fracionada sabor chocolate','600 g']],
+  passos:[
+   {t:'Bata a manteiga com o açúcar',x:'Bata a manteiga com o açúcar até virar um creme claro. Junte as gemas, uma por vez, e a baunilha.',dica:'Manteiga gelada não vira creme. Tire da geladeira 1 hora antes.'},
+   {t:'Junte os secos',x:'Peneire o amido, a farinha, o fermento e o bicarbonato por cima e misture com as mãos só até a massa ficar lisa.',dica:'Não sove. Massa sovada fica dura; pouco mexida fica macia e derrete na boca.'},
+   {t:'Abra e corte',x:'Abra a massa entre dois plásticos com 0,5 cm de espessura. Corte discos de 5 a 6 cm com um copo ou cortador. Rende uns 40 discos.',dica:'Se grudar, leve a massa aberta 10 minutos à geladeira antes de cortar.'},
+   {t:'Asse no forno de casa',x:'Asse em forno preaquecido a 180 °C por 8 a 10 minutos, até ficarem firmes mas ainda clarinhos por cima.',dica:'Tire antes de dourar. Dourou demais, a massa fica seca e quebra.'},
+   {t:'Esfrie, recheie e banhe',x:'Espere esfriar totalmente. Daí siga igual à versão com bolacha: recheio no centro, 15 minutos de geladeira, Banho de Vitrine e embalagem.',dica:'Disco morno derrete o recheio. Paciência aqui salva a fornada.'}]}
+};
+
+var BANHO=[
+ {t:'Use cobertura fracionada',x:'A cobertura fracionada, a que vem escrito “sabor chocolate”, não precisa de temperagem. É ela que dá o brilho fácil.',dica:'Chocolate nobre só fica brilhante temperado. Para começar, fique na fracionada.'},
+ {t:'Derreta devagar',x:'Pique e derreta no micro-ondas de 30 em 30 segundos, mexendo bem a cada vez. Pare quando ainda tiver uns pedacinhos e mexa até sumirem.',dica:'Superaquecer deixa o chocolate grosso e opaco. Morno no dedo é o ponto certo.'},
+ {t:'Alfajor gelado, chocolate morno',x:'Banhe os alfajores que ficaram 15 minutos na geladeira. A cobertura morna encosta na bolacha gelada e firma rápido, lisinha.',dica:'Nunca deixe cair água na cobertura. Uma gota já empelota tudo.'},
+ {t:'Mergulhe e escorra',x:'Mergulhe o alfajor inteiro, levante com um garfo e bata o garfo de leve na borda da tigela 3 ou 4 vezes para escorrer o excesso.',dica:'Passe a base do garfo na borda da tigela antes de pousar. Isso evita o “pé” de chocolate embaixo.'},
+ {t:'Decore enquanto está mole',x:'Coloque pistache picado, granulado ou um fio de chocolate branco enquanto a cobertura ainda está mole. Depois que seca, nada gruda.',dica:'Um sabor, uma decoração. Assim o cliente identifica o sabor sem abrir.'}
+];
+var ERROS=[
+ ['Chocolate opaco ou esbranquiçado','Superaqueceu ou pegou umidade.','Derreta mais devagar, de 30 em 30 segundos, e seque bem tigela e garfo.'],
+ ['Recheio escorrendo pela lateral','Recheio mole ou colocado demais.','Cozinhe o recheio mais 2 minutos e use 1 colher de sopa por alfajor.'],
+ ['Cobertura rachou depois de seca','Alfajor gelado demais.','Geladeira por 15 minutos, não mais que isso.'],
+ ['Cobertura grossa demais','Chocolate esfriou ou superaqueceu.','Volte ao micro-ondas por 10 segundos e mexa bem.'],
+ ['Bolacha amoleceu','Recheio úmido ou embalagem aberta.','Recheio no ponto firme e embalagem fechada logo depois de secar.'],
+ ['Pé de chocolate na base','Não escorreu o excesso.','Bata o garfo na borda e raspe a base antes de pousar.']
+];
+
+var SABORES=[
+ {id:'ninho',n:'Ninho com Nutella',f:'linear-gradient(180deg,#F3E9D8,#E7D6B8)',dot:'#5A2E1D',tag:'Mais vendido',cob:'Chocolate ao leite',
+  ing:[['Leite condensado','1 lata (395 g)'],['Leite em pó','4 colheres de sopa'],['Manteiga','1 colher de sopa'],['Creme de leite','2 colheres de sopa'],['Creme de avelã','20 colheres de chá (1 por alfajor)']],
+  modo:['Leve ao fogo baixo o leite condensado, a manteiga e o creme de leite, mexendo sempre.','Junte o leite em pó peneirado e cozinhe até desgrudar do fundo da panela, uns 10 minutos.','Espalhe num prato, cubra com plástico encostando no creme e deixe esfriar.','Na montagem, coloque 1 colher de sopa do creme e 1 colher de chá de creme de avelã no centro.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'Corte ao meio na frente do cliente: o creme de avelã escorrendo no meio do branco vende sozinho.'},
+ {id:'amendoim',n:'Doce de leite com amendoim',f:'linear-gradient(180deg,#C98A45,#A86A2E)',dot:'#D9B27C',tag:'Tendência',cob:'Chocolate meio amargo',
+  ing:[['Doce de leite de corte ou pastoso firme','400 g'],['Amendoim torrado sem pele, picado','100 g'],['Sal','1 pitada']],
+  modo:['Se o doce de leite estiver mole, leve à panela por 5 a 8 minutos mexendo, até firmar.','Desligue, junte o amendoim e o sal e misture.','Espere esfriar antes de rechear.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'A pitada de sal é o segredo. Ela realça o doce de leite e deixa o sabor viciante.'},
+ {id:'pistache',n:'Pistache',f:'linear-gradient(180deg,#B5DB8E,#8DBF62)',dot:'#5A2E1D',tag:'Premium',cob:'Chocolate meio amargo',
+  ing:[['Leite condensado','1 lata (395 g)'],['Chocolate branco picado','100 g'],['Manteiga','1 colher de sopa'],['Pasta de pistache','3 colheres de sopa'],['Pistache picado para decorar','50 g']],
+  modo:['Cozinhe o leite condensado com a manteiga em fogo baixo até engrossar, uns 8 minutos.','Desligue, junte o chocolate branco e mexa até derreter.','Misture a pasta de pistache. Esfrie coberto com plástico.','Decore o topo com pistache picado logo depois do banho.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'Pistache é o sabor que mais justifica preço alto. Cobre a mais por ele.'},
+ {id:'brigadeiro',n:'Brigadeiro',f:'linear-gradient(180deg,#5A3020,#3E1F14)',dot:'#C99B6B',tag:'Clássico',cob:'Chocolate ao leite',
+  ing:[['Leite condensado','1 lata (395 g)'],['Cacau em pó 50%','2 colheres de sopa'],['Manteiga','1 colher de sopa']],
+  modo:['Misture tudo na panela em fogo baixo.','Mexa até o brigadeiro desgrudar do fundo, uns 10 minutos. Ele precisa ficar no ponto de enrolar.','Esfrie coberto com plástico antes de rechear.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'Granulado de chocolate belga por cima deixa com cara de loja e custa pouco.'},
+ {id:'morango',n:'Morango',f:'linear-gradient(180deg,#F2A1A8,#E07A86)',dot:'#5A2E1D',tag:'Colorido',cob:'Chocolate branco',
+  ing:[['Leite condensado','1 lata (395 g)'],['Chocolate branco picado','80 g'],['Manteiga','1 colher de sopa'],['Geleia de morango firme','5 colheres de sopa']],
+  modo:['Faça um brigadeiro branco: leite condensado e manteiga em fogo baixo até engrossar, depois o chocolate branco.','Esfrie e misture a geleia.','Recheie e banhe na cobertura branca.'],
+  dura:'até 5 dias, guardado na geladeira',dica:'Use geleia, não fruta fresca. Morango fresco solta água e estraga o alfajor em 1 dia.'},
+ {id:'branco',n:'Chocolate branco',f:'linear-gradient(180deg,#C98A45,#A86A2E)',dot:'#F3E9D8',tag:'Delicado',cob:'Chocolate branco',
+  ing:[['Doce de leite firme','400 g'],['Cobertura fracionada sabor chocolate branco','600 g (no lugar da escura)']],
+  modo:['Recheie com doce de leite firme.','Banhe na cobertura branca seguindo o Banho de Vitrine.','Decore com um fio de chocolate ao leite.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'O branco mostra qualquer marca de dedo. Pegue sempre pelo garfo.'},
+ {id:'classico',n:'Doce de leite clássico',f:'linear-gradient(180deg,#C98A45,#A86A2E)',dot:'#C99B6B',tag:'Tradicional',cob:'Chocolate meio amargo',
+  ing:[['Doce de leite de corte ou pastoso firme','400 g'],['Essência de baunilha','1/2 colher de chá']],
+  modo:['Se precisar, firme o doce de leite na panela por 5 a 8 minutos.','Junte a baunilha, esfrie e recheie.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'É o mais barato de fazer. Use como o sabor de entrada do seu cardápio.'},
+ {id:'churros',n:'Churros',f:'linear-gradient(180deg,#C98A45,#A86A2E)',dot:'#E8C9A0',tag:'Queridinho',cob:'Chocolate ao leite',
+  ing:[['Doce de leite firme','400 g'],['Canela em pó','1 colher de chá'],['Açúcar com canela para finalizar','3 colheres de sopa']],
+  modo:['Misture a canela no doce de leite firme.','Recheie e banhe no chocolate ao leite.','Ainda mole, polvilhe açúcar com canela por cima.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'O cheiro de canela ao abrir o saquinho é o que faz pedir o segundo.'}
+];
+
+var MSGS=[
+ {t:'Grupo do condomínio',m:'Oi, vizinhos! 😊\nComecei a fazer alfajor gourmet aqui em casa e hoje tem fornada fresquinha:\n\n🍫 Ninho com Nutella\n🍫 Doce de leite com amendoim\n🍫 Pistache\n\nCada um R$ 15. Entrego aqui no prédio mesmo. Quem quiser é só me chamar no privado!'},
+ {t:'Status do WhatsApp',m:'Saiu agora 🔥\nAlfajor gourmet recheado, feito hoje.\nCorta ao meio e o recheio aparece 😮‍💨\n\nPoucas unidades. Me chama que eu separo o seu.'},
+ {t:'Colegas de trabalho',m:'Gente, amanhã vou levar alfajor gourmet pra vender aqui no trabalho 🍫\nSabores: Ninho com Nutella, pistache e doce de leite com amendoim.\nR$ 15 cada. Quem quiser garantir, me fala hoje que eu separo!'},
+ {t:'Placa do portão',m:'TEM ALFAJOR GOURMET\nRecheado e feito hoje\nR$ 15 cada · Caixinha com 4 por R$ 55\nChama no WhatsApp: (00) 00000-0000'},
+ {t:'Cliente que já comprou',m:'Oi, [nome]! Tudo bem?\nLembrei de você porque saiu fornada nova hoje, e tem sabor novo: pistache 💚\nQuer que eu separe o seu?'},
+ {t:'Encomenda de Natal',m:'Já pensou no presente de fim de ano? 🎁\nCaixinha de alfajor gourmet com laço, pronta pra dar:\n\n• 4 unidades: R$ 55\n• 6 unidades: R$ 80\n• 12 unidades: R$ 150\n\nAceito encomenda pra empresa e amigo secreto. Garanta até dia 15 de dezembro!'}
+];
+
+var KITS=[
+ {n:'Caixinha 4',q:4,uso:'Amigo secreto, lembrancinha',sug:55},
+ {n:'Caixinha 6',q:6,uso:'Presente de família, vizinha',sug:80},
+ {n:'Caixa 12',q:12,uso:'Empresa, ceia, presente grande',sug:150}
+];
+
+/* ---------- roteamento ---------- */
+var TABS=[['inicio','Início',I.home],['sabores','Receitas',I.spoon],['preco','Preço',I.calc],['caderno','Caderno',I.book],['atelie','Ateliê',I.star]];
+var tabOf={inicio:'inicio',fornada:'inicio',banho:'inicio',mensagens:'inicio',natal:'inicio',sabores:'sabores',preco:'preco',caderno:'caderno',atelie:'atelie'};
+function route(){var h=(location.hash||'#inicio').slice(1);return h||'inicio'}
+function go(h){if(location.hash==='#'+h){render()}else{location.hash=h}}
+function tabbar(cur){
+ var t=tabOf[cur]||(cur.indexOf('sabor-')===0?'sabores':'inicio');
+ document.getElementById('tabbar').innerHTML=TABS.map(function(x){return '<a href="#'+x[0]+'"'+(x[0]===t?' aria-current="page"':'')+'>'+x[2]+'<span>'+x[1]+'</span></a>'}).join('');
+}
+function backBtn(to,label){return '<div class="top"><button class="back" data-go="'+to+'">'+I.back+(label||'Voltar')+'</button><span class="brand">ALFAJOR<span> DE VITRINE</span></span></div>'}
+function doneBtn(id){var d=S.done[id];return '<button class="btn '+(d?'ghost':'pist')+' full" data-done="'+id+'">'+(d?'Concluído ✓ · marcar de novo':'Marcar como concluído')+'</button>'}
+
+/* ---------- telas ---------- */
+function vInicio(){
+ var total=MODS.length,feitos=MODS.filter(function(m){return S.done[m.id]}).length,pct=Math.round(feitos/total*100);
+ var trilha=[['fornada','Faça sua primeira fornada','20 alfajores em cerca de 1 hora'],['preco','Descubra seu preço','Quanto custa e quanto cobrar'],['mensagens','Mande a primeira mensagem','Copiar, colar e vender']];
+ return '<div class="top"><span class="brand">ALFAJOR<span> DE VITRINE</span></span><span class="badge p">Acesso liberado</span></div>'+
+ '<section class="hero"><img src="hero.webp" alt="Alfajores gourmet cortados ao meio, com recheio de pistache e de doce de leite"><div class="hero-in"><span class="eyebrow">Bem-vinda</span><h1>Seu primeiro <span class="shine">Pix de alfajor</span> começa hoje</h1></div></section>'+
+ '<section class="glass prog"><div class="prog-row"><b>Seu progresso</b><span class="num" style="color:var(--gold)">'+feitos+'/'+total+'</span></div><div class="bar"><i id="pbar" data-w="'+pct+'"></i></div><small class="muted">'+(feitos===total?'Método completo. Agora é vender todo dia.':'Marque cada módulo quando terminar.')+'</small></section>'+
+ '<section style="display:flex;flex-direction:column;gap:12px"><span class="eyebrow">Comece por aqui</span><div class="path">'+trilha.map(function(s,i){return '<a class="glass step'+(S.done[s[0]]?' done':'')+'" href="#'+s[0]+'"><span class="dot">'+(S.done[s[0]]?I.check:(i+1))+'</span><span><b>'+s[1]+'</b><small>'+s[2]+'</small></span>'+I.chev+'</a>'}).join('')+'</div></section>'+
+ '<section style="display:flex;flex-direction:column;gap:12px"><span class="eyebrow">Todos os módulos</span><div class="grid">'+MODS.map(function(m){return '<a class="glass tile'+(m.p?' p':'')+(S.done[m.id]?' done':'')+'" href="#'+m.id+'"><span class="ok">'+I.check+'</span><span class="ic">'+m.ic+'</span><span><b>'+m.t+'</b><br><small>'+m.d+'</small></span></a>'}).join('')+
+ '<a class="glass tile" href="#atelie" style="grid-column:1/-1;flex-direction:row;align-items:center;min-height:auto;border-color:rgba(245,181,68,.45)"><span class="ic">'+I.star.replace('currentColor','#F5B544')+'</span><span style="flex:1"><b>Ateliê do Alfajor</b><br><small>Novas vagas a partir de amanhã</small></span><span style="color:var(--gold)">'+I.lock+'</span></a></div></section>';
+}
+function vFornada(){
+ var tipo=S.fornTipo||'bolacha',F=FORNADA[tipo],i=Math.min(S.fornPasso||0,F.passos.length-1),p=F.passos[i];
+ return backBtn('inicio','Início')+
+ '<div class="head"><span class="eyebrow">Módulo 1 · '+F.tempo+'</span><h1>Primeira Fornada</h1><p class="muted">Rende 20 alfajores. Escolha a base: a bolacha é mais rápida, a massa caseira é mais gourmet e usa o forno de casa.</p></div>'+
+ '<div class="tabs" role="tablist"><button role="tab" aria-selected="'+(tipo==='bolacha')+'" data-forn="bolacha">Bolacha de pacote</button><button role="tab" aria-selected="'+(tipo==='massa')+'" data-forn="massa">Massa caseira</button></div>'+
+ '<section class="glass card"><h2>Lista de compras</h2><div>'+F.lista.map(function(l){return '<div class="qty"><span>'+l[0]+'</span><span>'+l[1]+'</span></div>'}).join('')+'</div></section>'+
+ stepper(F.passos,i,'forn')+doneBtn('fornada');
+}
+function stepper(arr,i,key){
+ var p=arr[i];
+ return '<section class="stepper"><span class="eyebrow">Passo a passo</span><div class="glass sframe" id="sframe"><span class="n">'+String(i+1).padStart(2,'0')+'</span><h2>'+p.t+'</h2><p>'+p.x+'</p><div class="tip"><b>Dica</b><span>'+p.dica+'</span></div></div>'+
+ '<div class="nav2"><button class="btn ghost" data-step="'+key+':-1"'+(i===0?' disabled':'')+' aria-label="Passo anterior">'+I.back+'</button><div class="dots">'+arr.map(function(_,k){return '<i class="'+(k===i?'on':'')+'"></i>'}).join('')+'</div><button class="btn gold" data-step="'+key+':1"'+(i===arr.length-1?' disabled':'')+'>Próximo</button></div></section>';
+}
+function vBanho(){
+ var i=Math.min(S.banhoPasso||0,BANHO.length-1);
+ return backBtn('inicio','Início')+
+ '<div class="head"><span class="eyebrow">Módulo 2</span><h1>Banho de <span class="shine">Vitrine</span></h1><p class="muted">O acabamento que faz o seu alfajor parecer de loja de shopping: chocolate brilhante, recheio no lugar e nada derretendo na mão do cliente.</p></div>'+
+ stepper(BANHO,i,'banho')+
+ '<section style="display:flex;flex-direction:column;gap:12px"><span class="eyebrow">Deu errado? Veja aqui</span>'+ERROS.map(function(e){return '<div class="glass card"><h3>'+e[0]+'</h3><p class="muted"><b style="color:var(--fg)">Por quê:</b> '+e[1]+'</p><p><b style="color:var(--pist)">Resolve assim:</b> '+e[2]+'</p></div>'}).join('')+'</section>'+doneBtn('banho');
+}
+function slice(s){return '<span class="slice" aria-hidden="true"><i class="c"></i><i class="b"></i><i class="f" style="background:'+s.f+'"></i><i class="b"></i><i class="c"></i></span>'}
+function vSabores(){
+ return '<div class="top"><span class="brand">ALFAJOR<span> DE VITRINE</span></span><span class="badge">8 sabores</span></div>'+
+ '<div class="head"><span class="eyebrow">Módulo 3</span><h1>Os 8 Sabores</h1><p class="muted">Cada ficha rende recheio para 20 alfajores. Comece pelos três primeiros: são os que mais saem.</p></div>'+
+ '<div class="flist">'+SABORES.map(function(s){return '<a class="glass fitem" href="#sabor-'+s.id+'">'+slice(s)+'<span style="min-width:0"><b>'+s.n+'</b><small>'+s.cob+'</small></span><span class="badge'+(s.tag==='Tendência'||s.tag==='Premium'?' p':'')+'" style="margin-left:auto">'+s.tag+'</span></a>'}).join('')+'</div>'+doneBtn('sabores');
+}
+function vSabor(id){
+ var s=SABORES.filter(function(x){return x.id===id})[0];if(!s)return vSabores();
+ return backBtn('sabores','Sabores')+
+ '<div class="fhero">'+slice(s)+'<div class="head" style="gap:6px"><span class="badge">'+s.tag+'</span><h1 style="font-size:1.55rem">'+s.n+'</h1></div></div>'+
+ '<section class="glass card"><h2>Recheio para 20 alfajores</h2><div>'+s.ing.map(function(l){return '<div class="qty"><span>'+l[0]+'</span><span>'+l[1]+'</span></div>'}).join('')+'</div></section>'+
+ '<section class="glass card"><h2>Modo de preparo</h2><ul class="clean">'+s.modo.map(function(m){return '<li>'+m+'</li>'}).join('')+'</ul></section>'+
+ '<section class="two"><div class="glass card"><small class="muted">Cobertura</small><b>'+s.cob+'</b></div><div class="glass card"><small class="muted">Validade</small><b>'+s.dura+'</b></div></section>'+
+ '<div class="tip"><b>Dica</b><span>'+s.dica+'</span></div>';
+}
+function calcVals(){var c=S.calc,ing=+c.ing||0,emb=+c.emb||0,rend=Math.max(1,+c.rend||1),preco=+c.preco||0,custo=ing/rend+emb,lucro=preco-custo;return {custo:custo,lucro:lucro,margem:preco>0?lucro/preco*100:0,sug:Math.ceil(custo*3.5)}}
+function vPreco(){
+ var c=S.calc;
+ return '<div class="top"><span class="brand">ALFAJOR<span> DE VITRINE</span></span><span class="badge p">Calculadora</span></div>'+
+ '<div class="head"><span class="eyebrow">Módulo 4</span><h1>Quanto cobrar</h1><p class="muted">Coloque o que você gastou na fornada. O app mostra o custo de cada alfajor e o seu lucro.</p></div>'+
+ '<form class="glass card" id="calcForm" novalidate>'+
+ '<div class="field"><label for="c-ing">Gasto com ingredientes na fornada</label><div class="inp"><span>R$</span><input id="c-ing" inputmode="decimal" value="'+c.ing+'"></div><small>Bolacha, recheio e cobertura. Some as notinhas.</small></div>'+
+ '<div class="two"><div class="field"><label for="c-rend">Rendeu quantos</label><div class="inp"><input id="c-rend" inputmode="numeric" value="'+c.rend+'"><span>un.</span></div></div>'+
+ '<div class="field"><label for="c-emb">Embalagem por unidade</label><div class="inp"><span>R$</span><input id="c-emb" inputmode="decimal" value="'+String(c.emb).replace('.',',')+'"></div></div></div>'+
+ '<div class="field"><label for="c-preco">Seu preço de venda por unidade</label><div class="inp"><span>R$</span><input id="c-preco" inputmode="decimal" value="'+String(c.preco).replace('.',',')+'"></div><small id="c-sug"></small></div></form>'+
+ '<section class="result" id="calcOut"></section>';
+}
+function calcOut(){
+ var v=calcVals(),p=+S.calc.preco||0,el=document.getElementById('calcOut');if(!el)return;
+ el.innerHTML='<small style="color:#CFE8BE;font-weight:700">Lucro por alfajor</small><span class="big">'+brl(v.lucro)+'</span>'+
+ (v.lucro<=0?'<p class="warn">Com esse preço você vende no prejuízo. Suba o valor.</p>':'')+
+ '<div class="rgrid"><div><small>Custo por unidade</small><b>'+brl(v.custo)+'</b></div><div><small>Margem</small><b>'+Math.round(v.margem)+'%</b></div>'+
+ '<div><small>Caixinha com 4</small><b>'+brl(p*4)+'</b></div><div><small>Lucro de 20 vendidos</small><b>'+brl(v.lucro*20)+'</b></div></div>';
+ var sg=document.getElementById('c-sug');if(sg)sg.textContent='Preço sugerido a partir de '+brl(v.sug)+' (3,5 vezes o custo).';
+}
+function vMensagens(){
+ return backBtn('inicio','Início')+
+ '<div class="head"><span class="eyebrow">Módulo 5</span><h1>Mensagens que Vendem</h1><p class="muted">Toque em copiar, cole no WhatsApp e troque o preço e o telefone pelos seus.</p></div>'+
+ MSGS.map(function(m,k){return '<section class="glass msg"><div class="row"><h2 style="font-size:1rem">'+m.t+'</h2><span class="copied" id="cp-'+k+'" hidden>Copiado</span></div><pre id="msg-'+k+'">'+esc(m.m)+'</pre><button class="btn gold" data-copy="'+k+'">Copiar mensagem</button></section>'}).join('')+doneBtn('mensagens');
+}
+function vNatal(){
+ var p=+S.calc.preco||15;
+ return backBtn('inicio','Início')+
+ '<div class="head"><span class="eyebrow">Módulo 6 · Dezembro</span><h1>Caixinha de <span class="shine">Natal</span></h1><p class="muted">Em dezembro, ninguém compra um alfajor: compra a caixinha. Monte três tamanhos e deixe o cliente escolher.</p></div>'+
+ '<section style="display:flex;flex-direction:column;gap:10px">'+KITS.map(function(k){return '<div class="glass card" style="flex-direction:row;align-items:center;gap:14px"><span class="dot" style="width:52px;height:52px;font-size:1.1rem">'+k.q+'</span><span style="flex:1;min-width:0"><b>'+k.n+'</b><br><small class="muted">'+k.uso+'</small></span><span style="text-align:right"><b class="num" style="color:var(--gold)">'+brl(k.sug)+'</b><br><small class="muted">avulso daria '+brl(p*k.q)+'</small></span></div>'}).join('')+'</section>'+
+ '<section class="glass card"><h2>Como montar</h2><ul class="clean"><li>Caixa kraft com divisória e papel de seda no fundo.</li><li>Um sabor por fileira, com o pistache sempre à vista.</li><li>Laço dourado e uma etiqueta escrita à mão: “Feito com carinho por [seu nome]”.</li><li>Um alfajor cortado ao meio por cima mostra o recheio na foto.</li></ul></section>'+
+ '<section class="glass card"><h2>Venda para empresas</h2><ul class="clean"><li>Ofereça no começo de novembro para RH, escritórios e lojas do bairro.</li><li>Pedido acima de 10 caixas: dê 10% de desconto e cobre metade adiantado.</li><li>Feche as encomendas até 15 de dezembro para dar conta da produção.</li></ul></section>'+
+ '<div class="tip"><b>Dica</b><span>A mensagem pronta de Natal está no módulo Mensagens que Vendem.</span></div>'+doneBtn('natal');
+}
+function weekStart(){var d=new Date();d.setHours(0,0,0,0);var w=(d.getDay()+6)%7;d.setDate(d.getDate()-w);return d.getTime()}
+function vCaderno(){
+ var now=new Date(),ws=weekStart(),ms=new Date(now.getFullYear(),now.getMonth(),1).getTime(),v=calcVals();
+ var sem=0,mes=0,und=0;S.vendas.forEach(function(x){if(x.ts>=ws)sem+=x.valor;if(x.ts>=ms){mes+=x.valor;und+=x.qtd}});
+ var lucroMes=und*Math.max(0,v.custo)?mes-und*v.custo:mes;
+ var lista=S.vendas.slice().sort(function(a,b){return b.ts-a.ts}).slice(0,30);
+ return '<div class="top"><span class="brand">ALFAJOR<span> DE VITRINE</span></span><span class="badge p">Caderninho</span></div>'+
+ '<div class="head"><span class="eyebrow">Módulo 7</span><h1>Caderninho de Lucro</h1><p class="muted">Anote cada venda. Fica salvo neste celular.</p></div>'+
+ '<section class="stats"><div class="glass stat"><small>Vendido na semana</small><b>'+brl(sem)+'</b></div><div class="glass stat"><small>Vendido no mês</small><b>'+brl(mes)+'</b></div><div class="glass stat"><small>Alfajores no mês</small><b>'+und+'</b></div><div class="glass stat g"><small>Lucro estimado no mês</small><b>'+brl(lucroMes)+'</b></div></section>'+
+ '<form class="glass card" id="vendaForm" novalidate><h2>Nova venda</h2><div class="two"><div class="field"><label for="v-qtd">Quantidade</label><div class="inp"><input id="v-qtd" inputmode="numeric" value="1"><span>un.</span></div></div><div class="field"><label for="v-val">Valor recebido</label><div class="inp"><span>R$</span><input id="v-val" inputmode="decimal" value="'+String(+S.calc.preco||15).replace('.',',')+'"></div></div></div><div class="field"><label for="v-cli">Cliente (opcional)</label><div class="inp"><input id="v-cli" placeholder="Ex.: Dona Maria, apto 32"></div></div><button class="btn gold full" type="submit">Anotar venda</button></form>'+
+ '<section style="display:flex;flex-direction:column;gap:10px"><span class="eyebrow">Últimas vendas</span>'+(lista.length?lista.map(function(x){var d=new Date(x.ts);return '<div class="glass sale"><span style="min-width:0"><b>'+x.qtd+' un.'+(x.cli?' · '+esc(x.cli):'')+'</b><br><span class="when">'+d.toLocaleDateString('pt-BR')+' às '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'</span></span><span class="val">'+brl(x.valor)+'</span><button class="x" data-del="'+x.ts+'" aria-label="Apagar venda">'+I.x+'</button></div>'}).join(''):'<div class="glass empty"><b>Nenhuma venda anotada ainda</b><span class="muted">Assim que vender o primeiro, anote aqui em cima. Ver o número subir é o que dá gás pra fornada seguinte.</span></div>')+'</section>'+
+ '<p class="muted" style="font-size:.82rem">O lucro usa o custo por unidade da Calculadora ('+brl(v.custo)+').</p>';
+}
+function vAtelie(){
+ return '<div class="top"><span class="brand">ALFAJOR<span> DE VITRINE</span></span><span class="badge">Área extra</span></div>'+
+ '<section class="atelie"><span class="eyebrow">Ateliê do Alfajor</span><h1 style="font-size:clamp(1.6rem,7vw,2rem)">Todo mês, um motivo novo pro cliente <span class="shine">comprar de novo</span></h1><p class="muted">Seu método já está completo. O Ateliê é para quem quer cardápio novo todo mês, sem precisar inventar.</p>'+
+ '<div style="display:flex;flex-direction:column;gap:10px">'+[['2 a 3 sabores novos por mês','Seguindo o que está em alta'],['Kit de cada data comemorativa','Dia dos Namorados, Páscoa, Dia das Mães e mais'],['Artes prontas para editar','Cardápio, etiqueta de caixinha e post de status'],['Desafio de vendas do mês','Meta, dicas e ranking entre as alunas']].map(function(x){return '<div class="locked">'+I.lock+'<span><b>'+x[0]+'</b><small>'+x[1]+'</small></span></div>'}).join('')+'</div>'+
+ '<button class="btn ghost full" disabled style="opacity:1;pointer-events:none;border-color:rgba(245,181,68,.45);color:var(--gold)">'+I.lock+'Vagas esgotadas</button><p style="text-align:center;font-weight:800">Novas vagas a partir de amanhã</p><small class="muted" style="text-align:center">Seu acesso ao método continua liberado pra sempre.</small></section>';
+}
+
+/* ---------- render ---------- */
+function render(){
+ var r=route(),html;
+ if(r.indexOf('sabor-')===0)html=vSabor(r.slice(6));
+ else html=({inicio:vInicio,fornada:vFornada,banho:vBanho,sabores:vSabores,preco:vPreco,mensagens:vMensagens,natal:vNatal,caderno:vCaderno,atelie:vAtelie}[r]||vInicio)();
+ var app=document.getElementById('app');
+ app.innerHTML='<div class="wrap view">'+html+'</div>';
+ tabbar(r);
+ if(r==='preco')calcOut();
+ var pb=document.getElementById('pbar');if(pb)requestAnimationFrame(function(){requestAnimationFrame(function(){pb.style.width=pb.dataset.w+'%'})});
+ if(!render.keep)window.scrollTo(0,0);render.keep=false;
+}
+function rerenderKeep(){render.keep=true;var y=window.scrollY;render();window.scrollTo(0,y)}
+
+document.addEventListener('click',function(e){
+ var t=e.target.closest('[data-go],[data-done],[data-forn],[data-step],[data-copy],[data-del]');if(!t)return;
+ if(t.dataset.go){go(t.dataset.go);return}
+ if(t.dataset.done){var id=t.dataset.done;S.done[id]=!S.done[id];save();toast(S.done[id]?'Módulo concluído':'Marcado como não concluído');rerenderKeep();return}
+ if(t.dataset.forn){S.fornTipo=t.dataset.forn;S.fornPasso=0;save();rerenderKeep();return}
+ if(t.dataset.step){var a=t.dataset.step.split(':'),k=a[0]==='forn'?'fornPasso':'banhoPasso',max=(a[0]==='forn'?FORNADA[S.fornTipo||'bolacha'].passos:BANHO).length-1;S[k]=Math.max(0,Math.min(max,(S[k]||0)+(+a[1])));save();rerenderKeep();var f=document.getElementById('sframe');if(f&&f.getBoundingClientRect().top<0)f.scrollIntoView({behavior:'smooth',block:'start'});return}
+ if(t.dataset.copy){var n=t.dataset.copy,txt=MSGS[n].m,ok=function(){var c=document.getElementById('cp-'+n);if(c)c.hidden=false;toast('Mensagem copiada')};
+  var fb=function(){var pre=document.getElementById('msg-'+n),r=document.createRange();r.selectNodeContents(pre);var s=window.getSelection();s.removeAllRanges();s.addRange(r);toast('Texto selecionado: toque em copiar')};
+  try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(err){fb()}return}
+ if(t.dataset.del){var ts=+t.dataset.del;if(t.dataset.armed){S.vendas=S.vendas.filter(function(x){return x.ts!==ts});save();toast('Venda apagada');rerenderKeep()}else{t.dataset.armed='1';t.style.color='var(--danger)';t.setAttribute('aria-label','Toque de novo para apagar');toast('Toque de novo para apagar');setTimeout(function(){if(t.isConnected){delete t.dataset.armed;t.style.color=''}},2500)}}
+});
+function num(v){return parseFloat(String(v).replace(/\./g,'').replace(',','.'))||0}
+function numDec(v){var s=String(v).trim();return s.indexOf(',')>-1?num(s):(parseFloat(s)||0)}
+document.addEventListener('input',function(e){
+ var id=e.target.id;if(!/^c-/.test(id))return;
+ var m={'c-ing':'ing','c-rend':'rend','c-emb':'emb','c-preco':'preco'}[id];
+ S.calc[m]=numDec(e.target.value);save();calcOut();
+});
+document.addEventListener('submit',function(e){
+ e.preventDefault();
+ if(e.target.id==='vendaForm'){
+  var q=Math.max(1,Math.round(numDec(document.getElementById('v-qtd').value))),v=numDec(document.getElementById('v-val').value),c=document.getElementById('v-cli').value.trim().slice(0,60);
+  if(v<=0){toast('Coloque o valor recebido');return}
+  S.vendas.push({ts:Date.now(),qtd:q,valor:v,cli:c});save();toast('Venda anotada: '+brl(v));rerenderKeep();
+ }
+});
+window.addEventListener('hashchange',render);
+render();
+})();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
+</body>
+</html>
