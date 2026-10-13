@@ -1,17 +1,3 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0B0705">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Alfajor">
-<meta name="robots" content="noindex, nofollow">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
-<style>html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
 <title>Alfajor de Vitrine</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;700;800&display=swap">
@@ -186,8 +172,6 @@ ul.clean li::before{content:"";flex:none;width:7px;height:7px;margin-top:9px;bor
 @media (max-width:360px){.grid,.two,.stats,.rgrid{grid-template-columns:1fr}}
 </style>
 
-</head>
-<body>
 <div class="bgfx" aria-hidden="true"></div>
 <main id="app" aria-live="polite"></main>
 <div class="toast" id="toast" role="status"></div>
@@ -230,8 +214,9 @@ var I={
 var MODS=[
  {id:'fornada',t:'Primeira Fornada',d:'20 alfajores, do zero',ic:I.fire},
  {id:'banho',t:'Banho de Vitrine',d:'Chocolate brilhante e recheio firme',ic:I.drop},
- {id:'sabores',t:'Os 8 Sabores',d:'Fichas completas',ic:I.circle,p:1},
+ {id:'sabores',t:'Os 18 Sabores',d:'Fichas completas',ic:I.circle,p:1},
  {id:'preco',t:'Calculadora',d:'Custo, preço e lucro',ic:I.calcp,p:1},
+ {id:'embalagem',t:'Embalagem Premium',d:'Deixe com cara de loja',ic:I.gift,p:1},
  {id:'mensagens',t:'Mensagens que Vendem',d:'Copiar e mandar',ic:I.chat,p:1},
  {id:'natal',t:'Caixinha de Natal',d:'Kits de 4, 6 e 12',ic:I.gift},
  {id:'caderno',t:'Caderninho de Lucro',d:'Cada venda anotada',ic:I.trend,p:1}
@@ -317,7 +302,47 @@ var SABORES=[
  {id:'churros',n:'Churros',f:'linear-gradient(180deg,#C98A45,#A86A2E)',dot:'#E8C9A0',tag:'Queridinho',cob:'Chocolate ao leite',
   ing:[['Doce de leite firme','400 g'],['Canela em pó','1 colher de chá'],['Açúcar com canela para finalizar','3 colheres de sopa']],
   modo:['Misture a canela no doce de leite firme.','Recheie e banhe no chocolate ao leite.','Ainda mole, polvilhe açúcar com canela por cima.'],
-  dura:'até 7 dias embalado, em local fresco',dica:'O cheiro de canela ao abrir o saquinho é o que faz pedir o segundo.'}
+  dura:'até 7 dias embalado, em local fresco',dica:'O cheiro de canela ao abrir o saquinho é o que faz pedir o segundo.'},
+ {id:'limao',n:'Limão Siciliano com Merengue',f:'linear-gradient(180deg,#F5E9A8,#E8D873)',dot:'#5A2E1D',tag:'Bônus',cob:'Chocolate branco',
+  ing:[['Leite condensado','1 lata (395 g)'],['Manteiga','1 colher de sopa'],['Suco de limão siciliano','4 colheres de sopa'],['Raspas de limão siciliano','1 colher de chá']],
+  modo:['Cozinhe o leite condensado com a manteiga em fogo baixo até engrossar levemente, uns 5 minutos.','Desligue e junte o suco e as raspas aos poucos, mexendo bem.','Esfrie coberto com plástico antes de rechear.'],
+  dura:'até 5 dias, guardado na geladeira',dica:'O azedinho do limão corta o doce do chocolate branco. Ótimo para quem acha os outros enjoativos.'},
+ {id:'cafe',n:'Café com Doce de Leite',f:'linear-gradient(180deg,#8B5A3C,#5A3620)',dot:'#E8C9A0',tag:'Bônus',cob:'Chocolate meio amargo',
+  ing:[['Doce de leite de corte ou pastoso firme','400 g'],['Café solúvel','2 colheres de sopa'],['Água quente','1 colher de sopa']],
+  modo:['Dissolva o café na água quente.','Misture ao doce de leite até incorporar bem. Se ficar mole, leve à panela por 3 minutos.','Esfrie antes de rechear.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'Perfeito pra vender de manhã, junto com o cafezinho do escritório.'},
+ {id:'redvelvet',n:'Red Velvet',f:'linear-gradient(180deg,#C94156,#8E1F30)',dot:'#F3E9D8',tag:'Bônus',cob:'Chocolate branco',
+  ing:[['Leite condensado','1 lata (395 g)'],['Chocolate branco picado','100 g'],['Manteiga','1 colher de sopa'],['Corante gel vermelho','algumas gotas'],['Cream cheese (opcional)','2 colheres de sopa']],
+  modo:['Cozinhe o leite condensado com a manteiga até engrossar, uns 8 minutos.','Desligue, junte o chocolate branco até derreter.','Tinja com o corante até a cor desejada e misture o cream cheese, se usar.','Esfrie antes de rechear.'],
+  dura:'até 5 dias, guardado na geladeira',dica:'A cor vermelha aparecendo no corte é a foto que mais viraliza no story.'},
+ {id:'maracuja',n:'Maracujá com Chocolate Branco',f:'linear-gradient(180deg,#F5C34D,#E89A2E)',dot:'#5A2E1D',tag:'Bônus',cob:'Chocolate branco',
+  ing:[['Leite condensado','1 lata (395 g)'],['Chocolate branco picado','80 g'],['Manteiga','1 colher de sopa'],['Suco concentrado de maracujá','4 colheres de sopa']],
+  modo:['Cozinhe o leite condensado com a manteiga até engrossar, uns 8 minutos.','Desligue, junte o chocolate branco até derreter.','Misture o suco de maracujá aos poucos. Esfrie antes de rechear.'],
+  dura:'até 5 dias, guardado na geladeira',dica:'Sabor que ninguém espera encontrar em alfajor — vira motivo de comentário e de pedido repetido.'},
+ {id:'pacoca',n:'Paçoca',f:'linear-gradient(180deg,#D9B27C,#B8905A)',dot:'#5A2E1D',tag:'Bônus',cob:'Chocolate ao leite',
+  ing:[['Doce de leite de corte ou pastoso firme','400 g'],['Paçoca esfarelada','6 unidades']],
+  modo:['Misture a paçoca esfarelada ao doce de leite até formar uma pasta grossa.','Recheie e banhe.','Finalize com farelo de paçoca por cima, ainda mole.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'Ingrediente baratíssimo e todo mundo reconhece o sabor de infância.'},
+ {id:'oreo',n:'Oreo',f:'linear-gradient(180deg,#3E2A20,#1F140D)',dot:'#F3E9D8',tag:'Bônus',cob:'Chocolate ao leite',
+  ing:[['Leite condensado','1 lata (395 g)'],['Manteiga','1 colher de sopa'],['Biscoito recheado de chocolate triturado','8 unidades']],
+  modo:['Faça um brigadeiro branco: leite condensado e manteiga em fogo baixo até engrossar.','Misture o biscoito triturado ainda quente. Esfrie antes de rechear.','Decore com pedaços do biscoito por cima.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'Reserve uns biscoitos inteiros pra decorar por cima — vende pela aparência antes de provar.'},
+ {id:'nozes',n:'Nozes com Doce de Leite',f:'linear-gradient(180deg,#A86A2E,#7A4B1E)',dot:'#F3E9D8',tag:'Bônus',cob:'Chocolate meio amargo',
+  ing:[['Doce de leite de corte ou pastoso firme','400 g'],['Nozes picadas','80 g']],
+  modo:['Misture as nozes picadas ao doce de leite.','Recheie e banhe.','Decore com metade de uma noz por cima, ainda mole.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'Cobre um pouco mais caro por esse — nozes já sinaliza sabor "de presente".'},
+ {id:'coco',n:'Coco Queimado',f:'linear-gradient(180deg,#F3E9D8,#E0CFA8)',dot:'#8B5A3C',tag:'Bônus',cob:'Chocolate ao leite',
+  ing:[['Leite condensado','1 lata (395 g)'],['Coco ralado','100 g'],['Manteiga','1 colher de sopa'],['Açúcar (para queimar)','2 colheres de sopa']],
+  modo:['Caramelize o açúcar em fogo baixo até dourar.','Junte o leite condensado, a manteiga e o coco, mexendo até engrossar.','Esfrie antes de rechear.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'O toque de caramelo queimado é o que diferencia de um beijinho comum.'},
+ {id:'flordesal',n:'Doce de Leite com Flor de Sal',f:'linear-gradient(180deg,#5A3620,#3E2414)',dot:'#F5E9A8',tag:'Bônus',cob:'Chocolate meio amargo',
+  ing:[['Doce de leite de corte ou pastoso firme','400 g'],['Flor de sal (ou sal grosso moído fino)','1 colher de chá']],
+  modo:['Misture metade do sal ao doce de leite.','Recheie e banhe.','Finalize salpicando o restante do sal por cima, ainda mole.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'Doce salgado é tendência em confeitaria fina — cobre o preço mais alto do cardápio nesse.'},
+ {id:'ferrero',n:'Ferrero (Avelã Crocante)',f:'linear-gradient(180deg,#6B3A1E,#4A2612)',dot:'#D9B27C',tag:'Bônus',cob:'Chocolate ao leite',
+  ing:[['Creme de avelã','300 g'],['Avelãs tostadas picadas','60 g'],['Wafer ou bolacha amanteigada triturada','3 unidades']],
+  modo:['Misture o creme de avelã com as avelãs picadas e a bolacha triturada, pra dar crocância.','Recheie e banhe.','Decore com uma avelã inteira por cima.'],
+  dura:'até 7 dias embalado, em local fresco',dica:'É o sabor pra cobrar o preço mais alto do cardápio — tem cara e gosto de produto importado.'}
 ];
 
 var MSGS=[
@@ -335,9 +360,25 @@ var KITS=[
  {n:'Caixa 12',q:12,uso:'Empresa, ceia, presente grande',sug:150}
 ];
 
+var EMB_MAT=[
+ ['Caixinha kraft 10x10x5 cm','1 por caixa (cabe até 3 alfajores)'],
+ ['Etiqueta adesiva redonda ou retangular dourada','1 por caixa ou saquinho'],
+ ['Saquinho de celofane com fecho adesivo 10x15 cm','1 por alfajor avulso'],
+ ['Papel de seda ou papel manteiga','1 folha por caixa'],
+ ['Fita ou barbante dourado','20 cm por caixa']
+];
+var EMB_PASSOS=[
+ 'Forre o fundo da caixinha com papel de seda ou manteiga, dobrado em leque.',
+ 'Encaixe o alfajor já frio e seco, sem tocar com a mão — use uma luva ou um pedaço de papel.',
+ 'Feche a caixa e amarre a fita, ou cole a etiqueta no centro da tampa.',
+ 'Para venda avulsa, use o saquinho de celofane e feche com o fecho adesivo, sem amassar o chocolate.',
+ 'Guarde as caixas montadas em local fresco e longe do sol até a hora da entrega.'
+];
+var EMB_LABEL='[Seu nome] · Alfajor Gourmet\n[Sabor]\nFeito em [data]\nValidade: [prazo]\nWhatsApp: (00) 00000-0000';
+
 /* ---------- roteamento ---------- */
 var TABS=[['inicio','Início',I.home],['sabores','Receitas',I.spoon],['preco','Preço',I.calc],['caderno','Caderno',I.book],['atelie','Ateliê',I.star]];
-var tabOf={inicio:'inicio',fornada:'inicio',banho:'inicio',mensagens:'inicio',natal:'inicio',sabores:'sabores',preco:'preco',caderno:'caderno',atelie:'atelie'};
+var tabOf={inicio:'inicio',fornada:'inicio',banho:'inicio',embalagem:'inicio',mensagens:'inicio',natal:'inicio',sabores:'sabores',preco:'preco',caderno:'caderno',atelie:'atelie'};
 function route(){var h=(location.hash||'#inicio').slice(1);return h||'inicio'}
 function go(h){if(location.hash==='#'+h){render()}else{location.hash=h}}
 function tabbar(cur){
@@ -352,7 +393,7 @@ function vInicio(){
  var total=MODS.length,feitos=MODS.filter(function(m){return S.done[m.id]}).length,pct=Math.round(feitos/total*100);
  var trilha=[['fornada','Faça sua primeira fornada','20 alfajores em cerca de 1 hora'],['preco','Descubra seu preço','Quanto custa e quanto cobrar'],['mensagens','Mande a primeira mensagem','Copiar, colar e vender']];
  return '<div class="top"><span class="brand">ALFAJOR<span> DE VITRINE</span></span><span class="badge p">Acesso liberado</span></div>'+
- '<section class="hero"><img src="hero.webp" alt="Alfajores gourmet cortados ao meio, com recheio de pistache e de doce de leite"><div class="hero-in"><span class="eyebrow">Bem-vinda</span><h1>Seu primeiro <span class="shine">Pix de alfajor</span> começa hoje</h1></div></section>'+
+ '<section class="hero"><img src="img/hero.webp" alt="Alfajores gourmet cortados ao meio, com recheio de pistache e de doce de leite"><div class="hero-in"><span class="eyebrow">Bem-vinda</span><h1>Seu primeiro <span class="shine">Pix de alfajor</span> começa hoje</h1></div></section>'+
  '<section class="glass prog"><div class="prog-row"><b>Seu progresso</b><span class="num" style="color:var(--gold)">'+feitos+'/'+total+'</span></div><div class="bar"><i id="pbar" data-w="'+pct+'"></i></div><small class="muted">'+(feitos===total?'Método completo. Agora é vender todo dia.':'Marque cada módulo quando terminar.')+'</small></section>'+
  '<section style="display:flex;flex-direction:column;gap:12px"><span class="eyebrow">Comece por aqui</span><div class="path">'+trilha.map(function(s,i){return '<a class="glass step'+(S.done[s[0]]?' done':'')+'" href="#'+s[0]+'"><span class="dot">'+(S.done[s[0]]?I.check:(i+1))+'</span><span><b>'+s[1]+'</b><small>'+s[2]+'</small></span>'+I.chev+'</a>'}).join('')+'</div></section>'+
  '<section style="display:flex;flex-direction:column;gap:12px"><span class="eyebrow">Todos os módulos</span><div class="grid">'+MODS.map(function(m){return '<a class="glass tile'+(m.p?' p':'')+(S.done[m.id]?' done':'')+'" href="#'+m.id+'"><span class="ok">'+I.check+'</span><span class="ic">'+m.ic+'</span><span><b>'+m.t+'</b><br><small>'+m.d+'</small></span></a>'}).join('')+
@@ -378,11 +419,21 @@ function vBanho(){
  stepper(BANHO,i,'banho')+
  '<section style="display:flex;flex-direction:column;gap:12px"><span class="eyebrow">Deu errado? Veja aqui</span>'+ERROS.map(function(e){return '<div class="glass card"><h3>'+e[0]+'</h3><p class="muted"><b style="color:var(--fg)">Por quê:</b> '+e[1]+'</p><p><b style="color:var(--pist)">Resolve assim:</b> '+e[2]+'</p></div>'}).join('')+'</section>'+doneBtn('banho');
 }
+function vEmbalagem(){
+ return backBtn('inicio','Início')+
+ '<div class="head"><span class="eyebrow">Módulo bônus</span><h1>Embalagem <span class="shine">Premium</span></h1><p class="muted">Seu alfajor pode estar com o sabor perfeito, mas se a embalagem parecer caseira, o cliente nunca paga o preço de loja por ele. Esse módulo é o que falta pra sua fornada sair pronta pra vender.</p></div>'+
+ '<section class="hero" style="min-height:200px"><img src="img/embalagem-premium.webp" alt="Caixa kraft aberta com alfajores gourmet de pistache, doce de leite com amendoim e chocolate, e um saquinho transparente com fecho dourado ao lado"><div class="hero-in"><span class="eyebrow">Resultado</span><h1 style="font-size:1.3rem">De "alguém vendendo doce" pra <span class="shine">marca</span></h1></div></section>'+
+ '<section class="glass card"><h2>O que usar</h2><div>'+EMB_MAT.map(function(l){return '<div class="qty"><span>'+l[0]+'</span><span>'+l[1]+'</span></div>'}).join('')+'</div></section>'+
+ '<section class="glass card"><h2>Como montar</h2><ul class="clean">'+EMB_PASSOS.map(function(p){return '<li>'+p+'</li>'}).join('')+'</ul></section>'+
+ '<div class="tip"><b>Onde comprar barato</b><span>Caixinha kraft e saquinho de celofane se acham em papelaria, loja de festas ou site de embalagens por atacado — busque "caixa kraft alfajor" ou "embalagem alfajor gourmet". Comprando 50 ou 100 de uma vez, o preço por peça cai bastante.</span></div>'+
+ '<section class="glass msg"><div class="row"><h2 style="font-size:1rem">Modelo de etiqueta</h2><span class="copied" id="cp-emb" hidden>Copiado</span></div><pre id="msg-emb">'+esc(EMB_LABEL)+'</pre><button class="btn gold" data-copytext="emb">Copiar modelo</button></section>'+doneBtn('embalagem');
+}
 function slice(s){return '<span class="slice" aria-hidden="true"><i class="c"></i><i class="b"></i><i class="f" style="background:'+s.f+'"></i><i class="b"></i><i class="c"></i></span>'}
 function vSabores(){
- return '<div class="top"><span class="brand">ALFAJOR<span> DE VITRINE</span></span><span class="badge">8 sabores</span></div>'+
- '<div class="head"><span class="eyebrow">Módulo 3</span><h1>Os 8 Sabores</h1><p class="muted">Cada ficha rende recheio para 20 alfajores. Comece pelos três primeiros: são os que mais saem.</p></div>'+
- '<div class="flist">'+SABORES.map(function(s){return '<a class="glass fitem" href="#sabor-'+s.id+'">'+slice(s)+'<span style="min-width:0"><b>'+s.n+'</b><small>'+s.cob+'</small></span><span class="badge'+(s.tag==='Tendência'||s.tag==='Premium'?' p':'')+'" style="margin-left:auto">'+s.tag+'</span></a>'}).join('')+'</div>'+doneBtn('sabores');
+ return '<div class="top"><span class="brand">ALFAJOR<span> DE VITRINE</span></span><span class="badge">'+SABORES.length+' sabores</span></div>'+
+ '<div class="head"><span class="eyebrow">Módulo 3</span><h1>Os '+SABORES.length+' Sabores</h1><p class="muted">Cada ficha rende recheio para 20 alfajores. Comece pelos três primeiros: são os que mais saem.</p></div>'+
+ '<section class="hero" style="min-height:160px"><img src="img/sabores-bonus.webp" alt="Cinco alfajores gourmet variados: limão siciliano com merengue, maracujá com chocolate branco, red velvet, café com doce de leite e churros"><div class="hero-in"><span class="eyebrow">Liberado pra você</span><h1 style="font-size:1.25rem">+10 <span class="shine">sabores bônus</span> além do método original</h1></div></section>'+
+ '<div class="flist">'+SABORES.map(function(s){return '<a class="glass fitem" href="#sabor-'+s.id+'">'+slice(s)+'<span style="min-width:0"><b>'+s.n+'</b><small>'+s.cob+'</small></span><span class="badge'+(s.tag==='Tendência'||s.tag==='Premium'||s.tag==='Bônus'?' p':'')+'" style="margin-left:auto">'+s.tag+'</span></a>'}).join('')+'</div>'+doneBtn('sabores');
 }
 function vSabor(id){
  var s=SABORES.filter(function(x){return x.id===id})[0];if(!s)return vSabores();
@@ -451,7 +502,7 @@ function vAtelie(){
 function render(){
  var r=route(),html;
  if(r.indexOf('sabor-')===0)html=vSabor(r.slice(6));
- else html=({inicio:vInicio,fornada:vFornada,banho:vBanho,sabores:vSabores,preco:vPreco,mensagens:vMensagens,natal:vNatal,caderno:vCaderno,atelie:vAtelie}[r]||vInicio)();
+ else html=({inicio:vInicio,fornada:vFornada,banho:vBanho,embalagem:vEmbalagem,sabores:vSabores,preco:vPreco,mensagens:vMensagens,natal:vNatal,caderno:vCaderno,atelie:vAtelie}[r]||vInicio)();
  var app=document.getElementById('app');
  app.innerHTML='<div class="wrap view">'+html+'</div>';
  tabbar(r);
@@ -462,7 +513,7 @@ function render(){
 function rerenderKeep(){render.keep=true;var y=window.scrollY;render();window.scrollTo(0,y)}
 
 document.addEventListener('click',function(e){
- var t=e.target.closest('[data-go],[data-done],[data-forn],[data-step],[data-copy],[data-del]');if(!t)return;
+ var t=e.target.closest('[data-go],[data-done],[data-forn],[data-step],[data-copy],[data-copytext],[data-del]');if(!t)return;
  if(t.dataset.go){go(t.dataset.go);return}
  if(t.dataset.done){var id=t.dataset.done;S.done[id]=!S.done[id];save();toast(S.done[id]?'Módulo concluído':'Marcado como não concluído');rerenderKeep();return}
  if(t.dataset.forn){S.fornTipo=t.dataset.forn;S.fornPasso=0;save();rerenderKeep();return}
@@ -470,6 +521,9 @@ document.addEventListener('click',function(e){
  if(t.dataset.copy){var n=t.dataset.copy,txt=MSGS[n].m,ok=function(){var c=document.getElementById('cp-'+n);if(c)c.hidden=false;toast('Mensagem copiada')};
   var fb=function(){var pre=document.getElementById('msg-'+n),r=document.createRange();r.selectNodeContents(pre);var s=window.getSelection();s.removeAllRanges();s.addRange(r);toast('Texto selecionado: toque em copiar')};
   try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(err){fb()}return}
+ if(t.dataset.copytext){var n2=t.dataset.copytext,txt2=({emb:EMB_LABEL})[n2]||'',ok2=function(){var c=document.getElementById('cp-'+n2);if(c)c.hidden=false;toast('Modelo copiado')};
+  var fb2=function(){var pre=document.getElementById('msg-'+n2),r=document.createRange();r.selectNodeContents(pre);var s=window.getSelection();s.removeAllRanges();s.addRange(r);toast('Texto selecionado: toque em copiar')};
+  try{navigator.clipboard.writeText(txt2).then(ok2,fb2)}catch(err){fb2()}return}
  if(t.dataset.del){var ts=+t.dataset.del;if(t.dataset.armed){S.vendas=S.vendas.filter(function(x){return x.ts!==ts});save();toast('Venda apagada');rerenderKeep()}else{t.dataset.armed='1';t.style.color='var(--danger)';t.setAttribute('aria-label','Toque de novo para apagar');toast('Toque de novo para apagar');setTimeout(function(){if(t.isConnected){delete t.dataset.armed;t.style.color=''}},2500)}}
 });
 function num(v){return parseFloat(String(v).replace(/\./g,'').replace(',','.'))||0}
@@ -491,6 +545,3 @@ window.addEventListener('hashchange',render);
 render();
 })();
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
-</body>
-</html>
